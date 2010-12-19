@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="../lib/jsunit/app/jsUnitCore.js" type="text/javascript">
+        </script>
+        <script src="../src/Eve.js" type="text/javascript">
+        </script>
+        <script language="javascript">
+          var testObject;
+          var testDiv;
+
+          function setUp() {
+            //debug("Setting up...");
+            testDiv = document.getElementById('test_div');
+            testDiv.innerText = "[Initial Text]";
+          }
+
+          function tearDown() {
+            //debug("Tearing down...");
+            testDiv = null;
+            Eve.forget("e1");
+          }
+
+          function testUnder() {
+            debug("Testing \'under\'...");
+            var aFunctionWithScope = function() {
+              testDiv.innerText += "e1_with_scope: AInternalAttribute = \'" + this.aInternalAttribute + "\'";
+            };
+            Eve.listen("e1").run(aFunctionWithScope).under({
+              aInternalAttribute: "Hi",
+              eve: Eve
+            });
+            Eve.lookup("e1").fire();
+            assertEquals("[Initial Text]e1_with_scope: AInternalAttribute = 'Hi'",testDiv.innerText);
+          }
+
+          function testNever() {
+            debug("Testing \'never\'...");
+            var aFuncToBeRemoved = function() {
+              testDiv.innerText +="e1_aFuncToBeRemoved";
+            };
+            Eve.listen("e1").run(aFuncToBeRemoved, 1);
+            Eve.lookup("e1").never(aFuncToBeRemoved);
+            Eve.lookup("e1").fire();
+            assertEquals("[Initial Text]",testDiv.innerText);
+          }
+
+          function testPriority() {
+            debug("Testing priority...");
+            Eve.listen("e1").run( function() {
+              testDiv.innerText += ",e1_3";
+            }, 3);
+            Eve.listen("e1").run( function() {
+              testDiv.innerText += ",e1_2";
+            }, 2);
+            Eve.listen("e1").run( function() {
+              testDiv.innerText += ",e1_same_with_2";
+            }, 2);
+            Eve.listen("e1").run( function() {
+              testDiv.innerText += ",e1_with_no_priority";
+            });
+            Eve.lookup('e1').fire();
+            assertEquals("[Initial Text],e1_2,e1_3,e1_with_no_priority", testDiv.innerText);
+          }
+
+          function testArguments() {
+            debug("Testing \'using\'...");
+            var aFuncWithArguments = function(a, b) {
+              testDiv.innerText += "e1_aFuncWithArguments:" + Eve.lookup("e1").data().a + "," + Eve.lookup("e1").data().b;
+            };
+            Eve.listen("e1").run(aFuncWithArguments);
+            Eve.lookup("e1").using({
+              a: "1",
+              b: "2"
+            }).fire();
+            assertEquals("[Initial Text]e1_aFuncWithArguments:1,2", testDiv.innerText);
+          }
+
+        </script>
+    </head>
+    <body>
+        <h1>Test Eve</h1>
+        <div id="test_div">
+        </div>
+    </body>
+</html>
+

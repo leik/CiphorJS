@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>reflection</title>
+        <script src="script/Eve.js">
+        </script>
+        <script src="script/Reflection.js">
+        </script>
+        <script>
+          Eve.listen("e1").run( function() {
+            alert("e1_2");
+          }, 2);
+          var testObject = Eve.lookup("e1");
+          alert(testObject.getClass().getMethods());
+          alert(testObject.getClass().getFields());
+
+          alert(testObject.getClass().getField("_name").getName());
+          alert(testObject.getClass().getField("_name").getType(testObject));
+          alert(testObject.getClass().getField("_name").get(testObject));
+          testObject.getClass().getField("_name").set(testObject,'e2');
+          alert(testObject.getClass().getField("_name").get(testObject));
+
+          alert(testObject.getClass().getMethod("using").getName());
+          testObject.getClass().getMethod("using").invoke(testObject,{a:1,b:2});
+          alert(testObject.data().a);
+
+          alert(testObject.getClass().getMethod("run").getName());
+          testObject.getClass().getMethod("run").invoke(testObject, function() {
+            alert("e1_1");
+          }, 1);
+          testObject.fire();
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

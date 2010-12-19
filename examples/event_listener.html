@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>event_listener</title>
+        <script src="script/Eve.js">
+        </script>
+        <script>
+
+          var aFuncToBeRemoved = function() {
+            alert("e1_aFuncToBeRemoved");
+          }
+          var aFuncWithArguments = function(a,b) {
+            alert("e1_aFuncWithArguments:"
+            +Eve.lookup("e1").data().a+","
+            +Eve.lookup("e1").data().b);
+          }
+          var aFunctionWithScope = function() {
+            alert("e1_with_scope: AInternalAttribute = \'"+this.aInternalAttribute+"\'");
+          }
+          Eve.listen("e1").run(aFuncToBeRemoved,1);
+          Eve.listen("e1").run( function() {
+            alert("e1_3");
+          }, 3);
+          Eve.listen("e1").run( function() {
+            alert("e1_2");
+          }, 2);
+          Eve.listen("e1").run( function() {
+            alert("e1_same_with_2");
+          }, 2);
+          Eve.listen("e1").run( function() {
+            alert("e1_with_no_priority");
+          });
+          Eve.listen("e1").run(aFuncWithArguments);
+          Eve.listen("e1").run(aFunctionWithScope).under({aInternalAttribute:"Hi",eve:Eve});
+
+          Eve.lookup("e1").never(aFuncToBeRemoved);
+
+          Eve.lookup("e1").using({a:"1",b:"2"}).fire();
+
+          Eve.forget("e1");
+
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>
