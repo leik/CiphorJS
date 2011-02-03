@@ -18,7 +18,7 @@ Object.prototype.getClass = function() {
  * 
  * @param object
  */
-Class = function(object) {
+var Class = function(object) {
 	this.__object = object;
 	this.__exclude_fields = [ '__proto__', 'prototype' ].join(',');
 	this.__exclude_methods = [ '_getClass', 'function()' ].join(',');
@@ -90,7 +90,7 @@ Class.prototype = {
  * 
  * @param fieldName
  */
-Field = function(fieldName) {
+var Field = function(fieldName) {
 	this._name = fieldName;
 };
 Field.prototype = {
@@ -140,7 +140,7 @@ Field.prototype = {
  * @param methodName
  * @param fn
  */
-Method = function(methodName, fn) {
+var Method = function(methodName, fn) {
 	this._name = methodName;
 	this._fn = fn;
 };
