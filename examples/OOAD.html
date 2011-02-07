@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>OOAD</title>
+        <script src="../src/OOAD.js">
+        </script>
+        <script>
+
+        /**
+         * Test inheritance;
+         */
+        var TestObjectForInheritance = (function TEST_EXTENDING(){
+	        var SuperClass = function(a,b){
+	  				this.a=a;
+	  				this.b=b;
+	  			};
+	  			
+	  			SuperClass.prototype.funcA = function(argA){
+	  				return argA*1;
+	  			};
+	  			SuperClass.prototype.funcB = function(argAB){
+	  				return argB*2;
+	  			};
+	  			
+	  			var SubClass = (function(c){
+	  				this.c=c;
+	  			}).extends(SuperClass);
+	  			SubClass.prototype.funcC = function(argC){
+	  				return argC*3;
+	  			};
+	  			
+	  			SubClass.prototype.funcA = function(argA){
+	  				var super_result = this.super.funcA(argA);
+	  				return super_result+1;
+	  			};
+	  			
+	  			var SubSubClass = (function(){}).extends(SubClass);
+	  			
+	  			SubSubClass.prototype.funcD = function(argD){
+	  						return argD*4;
+	  			};
+	  			
+	  			var test = new SubClass(12);
+	  			alert(test.funcA(2));
+	  			
+	  			return test;
+        })();
+        
+        /**
+         * Test Interface implementing
+         */
+        var TestObjectForInterface = (function TEST_INTERFACE(){
+        	var OneInterface = new Interface({
+        		methodA: function(argA){},
+        		methodB: function(argB){}
+        	});
+        	
+        	var AnotherInterface = new Interface({
+        		methodC: function(argC){}
+        	});
+        	
+        	var SuperClass = function(a,b){
+    				this.a=a;
+    				this.b=b;
+    			};
+    			SuperClass.prototype.methodA = function(argA){
+    				return argA*1;
+    			};
+    			SuperClass.prototype.methodB = function(argAB){
+    				return argB*2;
+    			};
+        	
+        	var TestClass = (function(a,b){
+        		this.a = a;
+        		this.b = b;
+        	}).extends(SuperClass).implements(OneInterface,AnotherInterface).withMethods({
+        		methodC : function(argC){return argC*3;}
+        	});
+        	
+        	return new TestClass(1,2);
+        })();
+  			
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

@@ -37,7 +37,7 @@ testCases(test,
       assert.that(testObject.data().a,eq(1));
       
       testObject.getClass().getMethod("run").invoke(testObject, function() {
-        print("e1_1");
+        print("e2");
       }, 1);
       testObject.fire();
 		},

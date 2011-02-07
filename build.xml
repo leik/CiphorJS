@@ -12,7 +12,7 @@
 	</scriptdef>
 	
 	<target name="run-unit-tests">
-		<rhinounit options="{verbose:true, stackTrace:true}" haltOnFirstFailure="true" rhinoUnitUtilPath="lib/rhinounit/src/rhinoUnitUtil.js">
+		<rhinounit options="{verbose:true, stackTrace:true}" haltOnFirstFailure="false" rhinoUnitUtilPath="lib/rhinounit/src/rhinoUnitUtil.js">
 			<fileset dir="test/rhinounit">
 				<include name="Test*.js"/>
 			</fileset>
