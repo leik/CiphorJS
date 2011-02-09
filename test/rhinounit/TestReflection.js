@@ -2,12 +2,13 @@ eval(loadFile("src/Eve.js"));
 eval(loadFile("src/Reflection.js"));
 
 var testObject;
+var testResult = 0;
 
 testCases(test,
 		
 		function setUp() {
 			Eve.listen("e1").run(function() {
-				print("e1");
+				testResult += 1;
 			}, 9);
 			testObject = Eve.lookup("e1");
 		},
@@ -37,9 +38,10 @@ testCases(test,
       assert.that(testObject.data().a,eq(1));
       
       testObject.getClass().getMethod("run").invoke(testObject, function() {
-        print("e2");
+      	testResult += 2;
       }, 1);
       testObject.fire();
+      assert.that(testResult, eq(3));
 		},
 		
 		function tearDown(){

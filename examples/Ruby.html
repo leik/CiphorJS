@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>Ruby</title>
+        <script src="../src/Ruby.js">
+        </script>
+        <script>
+
+				(function(){
+					var results = [1,"2",3].map(function(item){
+						return (item*10).times(function(it){
+							return it+1;
+						});
+					});
+					alert(results);
+					
+					alert([1,2,3,4,5].intersect([2,3,6]));
+					alert([1,2,3,4,5].deduct([2,3]));
+					alert([1,2,3,4,5].at(-2));
+				})()
+  			
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>
