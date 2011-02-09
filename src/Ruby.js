@@ -464,7 +464,7 @@
 	 * 
 	 * @param index
 	 * @param default_value
-	 * @returns
+	 * @returns the element at position index
 	 */
 	Array.prototype.fetch = function(index, default_value) {
 		return this.at(index) != null ? this.at(index) : default_value;
