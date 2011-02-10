@@ -297,7 +297,7 @@
 	/**
 	 * Passes elements to the block until the block returns null or false, then
 	 * stops iterating and returns an array of all prior elements. e.g.:
-	 * [1,2,3,4,5].take_while(function(i,el){return i<3;} ==> [1,2,3]
+	 * [1,2,3,4,5].take_while(function(i,el){return i<3;}) ==> [1,2,3]
 	 * 
 	 * @param condition_function(Index i,Element el)
 	 * @returns {Array}
@@ -315,7 +315,7 @@
 	/**
 	 * Invokes the block passing in successive elements from self, returning an
 	 * array containing those elements for which the block returns a true value.
-	 * e.g.: [5,2,3,1,4].select(function(i,el){return el<3;} ==> [2,1]
+	 * e.g.: [5,2,3,1,4].select(function(i,el){return el<3;}) ==> [2,1]
 	 * 
 	 * @param condition_function
 	 * @returns {Array}
@@ -332,7 +332,7 @@
 
 	/**
 	 * Returns a new array containing the items in self for which the block is not
-	 * true. e.g.: [1,2,3,4,5].reject(function(i,el){return el<3;} ==> [3,4,5]
+	 * true. e.g.: [1,2,3,4,5].reject(function(i,el){return el<3;}) ==> [3,4,5]
 	 * 
 	 * @param condition_function
 	 * @returns {Array}
@@ -471,9 +471,128 @@
 	};
 
 	/**
+	 * Returns the index of the first object in self such that is == to obj. If a
+	 * block is given instead of an argument, returns first object for which block
+	 * is true. Returns null if no match is found. e.g.
+	 * [1,2,3,4,5].index(function(i,el){return el==2;}) ==> 1;
+	 * [1,2,3,4,5].index(3) ==> 2
+	 * 
+	 * @param condition
+	 * @returns {Number}
+	 */
+	Array.prototype.index = function(condition) {
+		if (typeof condition == "function") {
+			for ( var i = 0, len = this.length; i < len; i++) {
+				if (condition(i, this[i]) == true) {
+					return i;
+				}
+			}
+		} else {
+			for ( var i = 0, len = this.length; i < len; i++) {
+				if (condition == this[i]) {
+					return i;
+				}
+			}
+		}
+		return null;
+	};
+
+	/**
+	 * Returns a new array that is a one-dimensional flattening of this array
+	 * (recursively). That is, for every element that is an array, extract its
+	 * elements into the new array. If the optional level argument determines the
+	 * level of recursion to flatten.
+	 * e.g.:[1,2,[3,[4,5],6,[7]],8,[9,10]].flatten(1) ==> [1, 2, 3, [4, 5], 6,
+	 * [7], 8, 9, 10]
+	 * 
+	 * @param level
+	 * @returns {Array}
+	 */
+	Array.prototype.flatten = function(level) {
+		var recursive_level = level != undefined ? level : 64;
+		var current_level = 0;
+		var resultArray = new Array();
+		var recursiveFlatting = function(item) {
+			if (item instanceof Array && current_level <= recursive_level) {
+				item.each(function(i, el) {
+					current_level++;
+					recursiveFlatting(el);
+					current_level--;
+				});
+			} else {
+				resultArray.push(item);
+			}
+		};
+		recursiveFlatting(this);
+		return resultArray;
+	};
+
+	/**
+	 * Deletes every element of self for which block evaluates to false.
+	 * 
+	 * @param condition_function(Index i,Element el)
+	 * @returns {Array}
+	 */
+	Array.prototype.keep_if = function(condition_function) {
+		var temp = this.select(condition_function);
+		this.clear().push_all(temp);
+		return this;
+	};
+
+	/**
+	 * Choose a random element or n random elements from the array. The elements
+	 * are chosen by using random and unique indices into the array in order to
+	 * ensure that an element doesn‘t repeat itself unless the array already
+	 * contained duplicate elements
+	 * 
+	 * @param n
+	 * @returns {Array}
+	 */
+	Array.prototype.sample = function(n) {
+		if (n > this.length) {
+			throw "Out of array length!";
+		}
+		var self = this;
+		var sampleCapacity = new Number(n != undefined ? n : 1);
+		var getRandomElement = function() {
+			return Math.floor(Math.random() * self.length);
+		};
+		var indexArray = new Array();
+		for ( var i = 0; i < sampleCapacity; i++) {
+			var current_index = getRandomElement();
+			while (indexArray.contains(current_index)) {
+				current_index = getRandomElement();
+			}
+			indexArray.push(current_index);
+		}
+		return indexArray.map(function(i, el) {
+			return self[el];
+		});
+	};
+
+	/**
+	 * Returns a new array with elements of this array shuffled. e.g.: a = [ 1, 2,
+	 * 3 ] #=> [1, 2, 3], a.shuffle #=> [2, 3, 1]
+	 * 
+	 * @returns {Array}
+	 */
+	Array.prototype.shuffle = function() {
+		return this.sample(this.length);
+	};
+	
+	/**
+	 * Alias for length
+	 * @returns {Number}
+	 */
+	Array.prototype.size = function(){
+		return this.length;
+	};
+
+	/**
 	 * Number.times function. 3.times(function(item){...})
 	 * 
 	 * @param handler function
+	 * @returns {Array}
 	 */
 	Number.prototype.times = function(handler) {
 		var results = new Array();

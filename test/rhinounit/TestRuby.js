@@ -137,6 +137,37 @@ testCases(test,
 			assert.that(testArray.fetch(2),eq(3));
 			assert.that(testArray.fetch(2, "defualt"),eq(3));
 			assert.that(testArray.fetch(12, "defualt"),eq("defualt"));
+		},
+		
+		function testIndex(){
+			assert.that(testArray.index(2), eq(1));
+			assert.that(testArray.index(function(i,el){
+				return el == 2;
+			}), eq(1));
+			assert.that(testArray.index(6), isNull());
+		},
+		
+		function testFlatten(){
+			//[1,2,3,4,5,6,7,8,9,10]
+			assert.that([1,2,[3,[4,5],6,[7]],8,[9,10]].flatten(),
+					isCollectionContainingOnly(1,2,3,4,5,6,7,8,9,10));
+			//[1, 2, 3, [4, 5], 6, [7], 8, 9, 10]
+			assert.that([1,2,[3,[4,5],6,[7]],8,[9,10]].flatten(1)[3],
+					isCollectionContainingOnly(4,5));
+		},
+		
+		function testKeepIf(){
+			assert.that(testArray.keep_if(function(i,item){
+				return item<4;
+			}), isCollectionContainingOnly(1,2,3));
+		},
+		
+		function testSample(){
+			assert.that(testArray.sample(3).uniq().length, eq(3));
+			assert.that(testArray.sample().length, eq(1));
+			shouldThrowException(function(){
+				testArray.sample(6);
+			});
 		}
 		
 );
