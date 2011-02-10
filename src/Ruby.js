@@ -579,12 +579,13 @@
 	Array.prototype.shuffle = function() {
 		return this.sample(this.length);
 	};
-	
+
 	/**
 	 * Alias for length
+	 * 
 	 * @returns {Number}
 	 */
-	Array.prototype.size = function(){
+	Array.prototype.size = function() {
 		return this.length;
 	};
 
@@ -596,8 +597,12 @@
 	 */
 	Number.prototype.times = function(handler) {
 		var results = new Array();
-		for ( var i = 0; i < this; i++) {
-			results.push(handler(i));
+		if (this > 0 && this == parseInt(this)) {
+			for ( var i = 0; i < Math.ceil(this); i++) {
+				results.push(handler(i));
+			}
+		} else {
+			throw "Illegal number for times() function. Positive integer is required.";
 		}
 		return results;
 	};
