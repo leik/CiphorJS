@@ -11,7 +11,7 @@ testCases(test,
 			var results = testArray.map(function(i,item){
 				return item*10;
 			});
-			assert.that(results,isCollectionContainingOnly(10,20,30,40,5));
+			assert.that(results,isCollectionContainingOnly(10,20,30,40,50));
 		},
 		
 		function testTimes(){
