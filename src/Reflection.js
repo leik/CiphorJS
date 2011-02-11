@@ -161,14 +161,14 @@
 		 * Invoke the method.
 		 * 
 		 * @param instance
+		 * @return Object
 		 */
 		invoke : function(instance) {
 			var argArray = new Array();
 			for ( var i = 1; i < arguments.length; i++) {
 				argArray.push(arguments[i]);
 			}
-			var argString = argArray.join(",");
-			this._fn.apply(instance, argArray);
+			return this._fn.apply(instance, argArray);
 		}
 	};
 })();
