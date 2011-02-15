@@ -1,7 +1,58 @@
-/**
- * times;map;module;
- */
 (function() {
+
+	/**
+	 * Ruby style attr_writer method. It creates setter methods for declared
+	 * attributes in arguments.
+	 * 
+	 * @param attr(s)
+	 */
+	Object.prototype.attr_writer = function(attr) {
+		for ( var i = 0, len = arguments.length; i < len; i++) {
+			var attr_name = arguments[i];
+			var setterMethodName = 'set' + attr_name.capitalise();
+			this.__proto__[setterMethodName] = function(value) {
+				this[attr_name] = value;
+			};
+		}
+	};
+
+	/**
+	 * Ruby style attr_reader method. It creates getter methods for declared
+	 * attributes in arguments.
+	 * 
+	 * @param attr
+	 */
+	Object.prototype.attr_reader = function(attr) {
+		for ( var i = 0, len = arguments.length; i < len; i++) {
+			var attr_name = arguments[i];
+			var getterMethodName = 'get' + attr_name.capitalise();
+			this.__proto__[getterMethodName] = function() {
+				return this[attr_name];
+			};
+		}
+	};
+
+	/**
+	 * Ruby style attr_accessor method. It creates both setter and getter methods
+	 * for declared attributes in arguments.
+	 * 
+	 * @param attr
+	 */
+	Object.prototype.attr_accessor = function(attr) {
+		for ( var i = 0, len = arguments.length; i < len; i++) {
+			this.attr_reader(arguments[i]);
+			this.attr_writer(arguments[i]);
+		}
+	};
+
+	/**
+	 * Returns a copy of string with the first character converted to upper case.
+	 * 
+	 * @returns {String}
+	 */
+	String.prototype.capitalise = function() {
+		return this.charAt(0).toUpperCase() + this.slice(1);
+	};
 
 	/**
 	 * Add all elements in the given array into the self.
