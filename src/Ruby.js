@@ -10,7 +10,7 @@
 		for ( var i = 0, len = arguments.length; i < len; i++) {
 			var attr_name = arguments[i];
 			var setterMethodName = 'set' + attr_name.capitalise();
-			this.__proto__[setterMethodName] = function(value) {
+			this.constructor.prototype[setterMethodName] = function(value) {
 				this[attr_name] = value;
 			};
 		}
@@ -26,7 +26,7 @@
 		for ( var i = 0, len = arguments.length; i < len; i++) {
 			var attr_name = arguments[i];
 			var getterMethodName = 'get' + attr_name.capitalise();
-			this.__proto__[getterMethodName] = function() {
+			this.constructor.prototype[getterMethodName] = function() {
 				return this[attr_name];
 			};
 		}
