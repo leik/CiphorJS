@@ -824,9 +824,9 @@
 	 * passed to the block is greater than limit (if step is positive) or less
 	 * than limit (if step is negative).
 	 * 
-	 * @param limit
-	 * @param step
 	 * @param function_block(Number i)
+	 * @param limit
+	 * @param step(Optional)
 	 */
 	Number.prototype.step = function(function_block, limit, step) {
 		var stepGap = 1;
