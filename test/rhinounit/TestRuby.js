@@ -212,9 +212,9 @@ testCases(test,
 		
 		function testNumberStep(){
 			var temp =0;
-			testNumber.step(30.4, 2.4, function(i){
+			testNumber.step(function(i){
 				temp ++;
-			});
+			},30.4, 2.4);
 			assert.that(temp,eq(8));
 		}
 
