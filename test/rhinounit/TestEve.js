@@ -1,4 +1,4 @@
-eval(loadFile("src/Eve.js"));
+eval(loadFile("src/com/ciphor/Eve.js"));
 
 testCases(test, 
   function testUnder() {

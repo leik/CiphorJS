@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
         <title>OOAD</title>
-        <script src="../src/ObjectOriented.js">
+        <script src="../src/com/ciphor/core.js">
         </script>
         <script>
 
@@ -83,6 +83,8 @@
         	return new TestClass(1,2);
         })();
   			
+        Package.base("../src/");
+				Package.import("com.ciphor.Eve");
         </script>
     </head>
     <body>

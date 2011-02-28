@@ -5,11 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
         <title>reflection</title>
-        <script src="../src/Eve.js">
-        </script>
-        <script src="../src/Reflection.js">
+        <script src="../src/com/ciphor/Core.js">
         </script>
         <script>
+        	Package.base("../src");
+        	Package.import("com.ciphor.Eve");
+        	Package.import("com.ciphor.Reflection");
+        
           Eve.listen("e1").run( function() {
             alert("e1_2");
           }, 2);

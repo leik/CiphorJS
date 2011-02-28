@@ -5,15 +5,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
         <title>Ruby</title>
-        <script src="../src/Ruby.js">
-        </script>
+        <script src="../src/com/ciphor/Core.js"></script>
         <script>
+        	Package.base("../src/");
+        	Package.import("com.ciphor.ruby.Array");
+					Package.import("com.ciphor.ruby.String");
+					Package.import("com.ciphor.ruby.Number");
+					Package.import("com.ciphor.ruby.Object");
 
-
-  			var temp="";
-				(30).step(-23.8,-3.2,function(i){
-					temp+=i+",";
-				});
+	  			var temp="";
+	  			(new Number(30)).step(function(i){
+						temp+=i+",";
+					},-23.8,-3.2);
 				
 				
         </script>

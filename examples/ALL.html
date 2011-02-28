@@ -5,12 +5,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
         <title>ALL</title>
-        <script src="../src/Eve.js"></script>
-        <script src="../src/OOAD.js"></script>
-        <script src="../src/Reflection.js"></script>
-        <script src="../src/Ruby.js"></script>
+        <script src="../src/com/ciphor/Core.js"></script>
         <script>
-
+        	Package.base("../src/");
+					Package.import("com.ciphor.Eve");
+					Package.import("com.ciphor.Reflection");
+					Package.import("com.ciphor.ruby.Array");
+					Package.import("com.ciphor.ruby.String");
+					Package.import("com.ciphor.ruby.Number");
+					Package.import("com.ciphor.ruby.Object");
          
         </script>
     </head>

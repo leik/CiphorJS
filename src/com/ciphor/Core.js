@@ -2,6 +2,7 @@
  * Inheritance function;
  * 
  * @param super_class The super class to extends.
+ * @memberOf Function
  * @returns {Object}
  */
 Function.prototype.extends = function(super_class) {
@@ -15,6 +16,7 @@ Function.prototype.extends = function(super_class) {
  * Interface implementing function.
  * 
  * @param [interface,interface...] unfixed number of arguments are accepted.
+ * @memberOf Function
  * @returns {Object}
  */
 Function.prototype.implements = function() {
@@ -31,6 +33,7 @@ Function.prototype.implements = function() {
  * Implementing interface with implementation methods.
  * 
  * @param implementation_class
+ * @memberOf Function
  * @returns {Object}
  */
 Function.prototype.withMethods = function(implementation_class) {
@@ -47,7 +50,7 @@ Function.prototype.withMethods = function(implementation_class) {
  * Interface class definition.
  * 
  * @param clazz
- * @returns
+ * @returns Interface
  */
 var Interface = function(clazz) {
 	this.raw_class = clazz;
@@ -64,6 +67,7 @@ var Interface = function(clazz) {
  * class.
  * 
  * @param clazz
+ * @memberOf Interface
  */
 Interface.prototype.allImplemented = function(clazz) {
 	var all_implemented = true;
@@ -77,5 +81,35 @@ Interface.prototype.allImplemented = function(clazz) {
 	}
 	if (!all_implemented) {
 		throw "Interface methods unimplemented: " + unimplemented_methods;
+	}
+};
+
+var Package = {
+	__imported : {},
+	__baseUrl : null,
+
+	base : function(url) {
+		if (!url) {
+			this.__baseUrl = window.location.protocol + "\/\/" + window.location.host + "\/";
+		} else {
+			this.__baseUrl = url + "\/";
+		}
+	},
+
+	import : function(packageName) {
+		if (!this.__baseUrl) {
+			this.base();
+		}
+		if (!this.__imported[packageName]) {
+			var url = this.__baseUrl + packageName.replace(/\./g, "\/").concat(".js");
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", url, false);
+
+			var textout = xhr.responseText;
+			eval(textout);
+
+			xhr.send(null);
+			this.__imported[packageName] = true;
+		}
 	}
 };

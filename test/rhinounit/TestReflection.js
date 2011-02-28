@@ -1,5 +1,5 @@
-eval(loadFile("src/Eve.js"));
-eval(loadFile("src/Reflection.js"));
+eval(loadFile("src/com/ciphor/Eve.js"));
+eval(loadFile("src/com/ciphor/Reflection.js"));
 
 var testObject;
 var testResult = 0;

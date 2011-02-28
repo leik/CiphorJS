@@ -1,4 +1,5 @@
-eval(loadFile("src/Ruby.js"));
+eval(loadFile("src/com/ciphor/ruby/Object.js"));
+eval(loadFile("src/com/ciphor/ruby/String.js"));
 
 testCases(test,
 		
