@@ -1,4 +1,50 @@
 /**
+ * Initial configuration object for CiphorJS components. baseUrl : the url for
+ * the ciphor root directory.
+ */
+var config = (function() {
+	var config;
+	var scriptTags = document.getElementsByTagName("script");
+	for ( var i = 0, len = scriptTags.length; i < len; i++) {
+		if (scriptTags[i].getAttribute("config") != undefined) {
+			eval("config = {" + scriptTags[i].getAttribute("config") + "}");
+		}
+	}
+	;
+	return config;
+})();
+
+var Package = {
+	__imported : {},
+	__baseUrl : null,
+
+	base : function(url) {
+		if (url) {
+			this.__baseUrl = url;
+		} else if (config && config.baseUrl) {
+			this.__baseUrl = config.baseUrl;
+		} else {
+			this.__baseUrl = window.location.protocol + "\/\/" + window.location.host;
+		}
+		this.__baseUrl += "\/";
+	},
+
+	import : function(packageName) {
+		if (!this.__baseUrl) {
+			this.base();
+		}
+		if (!this.__imported[packageName]) {
+			var url = this.__baseUrl + packageName.replace(/\./g, "\/").concat(".js");
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", url, false);
+			xhr.send(null);
+			eval(xhr.responseText);
+			this.__imported[packageName] = true;
+		}
+	}
+};
+
+/**
  * Inheritance function;
  * 
  * @param super_class The super class to extends.
@@ -81,35 +127,5 @@ Interface.prototype.allImplemented = function(clazz) {
 	}
 	if (!all_implemented) {
 		throw "Interface methods unimplemented: " + unimplemented_methods;
-	}
-};
-
-var Package = {
-	__imported : {},
-	__baseUrl : null,
-
-	base : function(url) {
-		if (!url) {
-			this.__baseUrl = window.location.protocol + "\/\/" + window.location.host + "\/";
-		} else {
-			this.__baseUrl = url + "\/";
-		}
-	},
-
-	import : function(packageName) {
-		if (!this.__baseUrl) {
-			this.base();
-		}
-		if (!this.__imported[packageName]) {
-			var url = this.__baseUrl + packageName.replace(/\./g, "\/").concat(".js");
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET", url, false);
-
-			var textout = xhr.responseText;
-			eval(textout);
-
-			xhr.send(null);
-			this.__imported[packageName] = true;
-		}
 	}
 };

@@ -4,11 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>OOAD</title>
-        <script src="../src/com/ciphor/core.js">
+        <title>Ciphor Core</title>
+        <script type="text/javascript" src="../src/com/ciphor/Core.js" config="baseUrl:'../src'">
         </script>
         <script>
 
+				Package.import("com.ciphor.Eve");
         /**
          * Test inheritance;
          */
@@ -83,8 +84,6 @@
         	return new TestClass(1,2);
         })();
   			
-        Package.base("../src/");
-				Package.import("com.ciphor.Eve");
         </script>
     </head>
     <body>

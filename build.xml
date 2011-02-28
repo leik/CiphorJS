@@ -1,6 +1,6 @@
 <project name="CiphorJS" basedir="." default="run-unit-tests">
-
-
+	<property name="webapp" value="/kiwi/java/tomcat/scs-3.0/apache-tomcat-6.0.29/webapps/CiphorJS" />
+	
 	<scriptdef name="rhinounit"
 			  src="lib/rhinounit/src/rhinoUnitAnt.js"
 			  language="javascript">
@@ -18,4 +18,11 @@
 			</fileset>
 		</rhinounit>
 	</target>
+	
+	<target name="test-deploy">
+			<copy todir="${webapp}">
+				<fileset dir=".">
+				</fileset>
+			</copy>
+		</target>
 </project>
