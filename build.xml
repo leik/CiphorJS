@@ -1,5 +1,4 @@
-<project name="CiphorJS" basedir="." default="run-unit-tests">
-	<property name="webapp" value="/kiwi/java/tomcat/scs-3.0/apache-tomcat-6.0.29/webapps/CiphorJS" />
+<project name="CiphorJS" basedir="." default="run-tests">
 	
 	<scriptdef name="rhinounit"
 			  src="lib/rhinounit/src/rhinoUnitAnt.js"
@@ -19,10 +18,13 @@
 		</rhinounit>
 	</target>
 	
-	<target name="test-deploy">
-			<copy todir="${webapp}">
-				<fileset dir=".">
-				</fileset>
-			</copy>
-		</target>
+	<target name="run-jasmine-tests">
+	  <exec executable="jasmine-node">
+	    <arg value="--verbose"/>
+	    <arg value="--coffee"/>
+	    <arg value="."/>
+	  </exec>
+	</target>
+	
+	<target name="run-tests" depends="run-unit-tests,run-jasmine-tests"/>
 </project>

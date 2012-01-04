@@ -5,9 +5,7 @@
 	 * @param arr
 	 */
 	Array.prototype.push_all = function(arr) {
-		for ( var i = 0; i < arr.length; i++) {
-			this.push(arr[i]);
-		}
+		Array.prototype.push.apply(this,arr);
 		return this;
 	};
 
@@ -199,6 +197,7 @@
 		}
 		return result;
 	};
+
 	/**
 	 * Set Union — Returns a new array by joining this array with other_ary,
 	 * removing duplicates.

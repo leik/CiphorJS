@@ -7,6 +7,12 @@ testCases(test,
 			testArray = [1,2,3,4,5];
 		},
 		
+		function testPushAll(){
+		    var results = testArray.push_all([6,7,8]);
+		    assert.that(results.length, eq(8));
+		    assert.that(results, containsInOrder(1,2,3,4,5,6,7,8));
+		},
+		
 		function testMap(){
 			var results = testArray.map(function(i,item){
 				return item*10;
