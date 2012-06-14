@@ -5,7 +5,7 @@
 	 * @returns {String}
 	 */
 	String.prototype.capitalise = function() {
-		return this.charAt(0).toUpperCase() + this.slice(1);
+		return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
 	};
 
 	/**
@@ -49,7 +49,7 @@
 	 * @param prefix
 	 * @returns {Boolean}
 	 */
-	String.prototype.stat_with = function(prefix) {
+	String.prototype.start_with = function(prefix) {
 		var exp = new RegExp("^" + prefix, "g");
 		return exp.test(this);
 	};

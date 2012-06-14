@@ -9,7 +9,7 @@
 	Object.prototype.attr_writer = function(attr) {
 		for ( var i = 0, len = arguments.length; i < len; i++) {
 			var attr_name = arguments[i];
-			var setterMethodName = 'set' + attr_name.capitalise();
+			var setterMethodName = 'set' + attr_name.charAt(0).toUpperCase() + attr_name.slice(1);
 			this.constructor.prototype[setterMethodName] = function(value) {
 				this[attr_name] = value;
 			};
@@ -25,7 +25,7 @@
 	Object.prototype.attr_reader = function(attr) {
 		for ( var i = 0, len = arguments.length; i < len; i++) {
 			var attr_name = arguments[i];
-			var getterMethodName = 'get' + attr_name.capitalise();
+			var getterMethodName = 'get' + attr_name.charAt(0).toUpperCase() + attr_name.slice(1);
 			this.constructor.prototype[getterMethodName] = function() {
 				return this[attr_name];
 			};
